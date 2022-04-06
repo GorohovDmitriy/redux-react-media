@@ -1,0 +1,147 @@
+.post__box {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  position: relative;
+
+  &__menu {
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    background-color: white;
+    top: 20px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+    right: 45px;
+    border-radius: 8px;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 110%;
+      color: rgba(7, 9, 40, 0.75);
+    }
+  }
+
+  &__edit {
+    cursor: pointer;
+  }
+
+  &__img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  &__title {
+    word-wrap: break-word;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 110%;
+    color: rgba(7, 9, 40, 0.75);
+    padding-bottom: 10px;
+  }
+
+  &__image {
+    object-fit: contain;
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  &__video {
+    border-radius: 30px;
+  }
+
+  &__document {
+    width: 100%;
+
+    embed {
+      border-radius: 20px;
+    }
+  }
+}
+
+.post__icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        path {
+          fill: #1e2370;
+        }
+      }
+    }
+
+    p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 110%;
+      display: flex;
+      align-items: center;
+      color: rgba(7, 9, 40, 0.75);
+    }
+  }
+}
+
+.post__comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &__input {
+    width: 100%;
+    position: relative;
+
+    input {
+      width: 100%;
+      background: aliceblue;
+      outline: none;
+      border: 1px solid aliceblue;
+      border-radius: 20px;
+      padding: 13px 25px;
+      width: 100%;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      color: rgba(7, 9, 40, 0.75);
+
+      &:focus {
+        border: 1px solid rgba(52, 86, 255, 0.75);
+      }
+    }
+
+    &__icons {
+      position: absolute;
+      top: 9px;
+      right: 15px;
+      cursor: pointer;
+    }
+  }
+}
