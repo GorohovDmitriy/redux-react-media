@@ -7,26 +7,31 @@ interface CommentFormProps {
   addCommentInPost?: (event: FormEvent) => void;
   message?: string;
   handleChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  post: any;
 }
 
 const CommentForm: FC<CommentFormProps> = ({
   addCommentInPost,
   message,
   handleChange,
+  post,
 }) => {
   return (
-    <form className="post__comment__input" onSubmit={addCommentInPost}>
-      <div className="post__comment__input__icons" onClick={addCommentInPost}>
-        <FcCheckmark size={25} />
-      </div>
-      <Input
-        className="input"
-        type="text"
-        value={message}
-        onChange={handleChange}
-        placeholder="add Comment..."
-      />
-    </form>
+    <div className="post__comment">
+      <img src={`${post.image}`} alt="Avatar" className="post__box__img" />
+      <form className="post__comment__input" onSubmit={addCommentInPost}>
+        <div className="post__comment__input__icons" onClick={addCommentInPost}>
+          <FcCheckmark size={25} />
+        </div>
+        <Input
+          className="input"
+          type="text"
+          value={message}
+          onChange={handleChange}
+          placeholder="add Comment..."
+        />
+      </form>
+    </div>
   );
 };
 

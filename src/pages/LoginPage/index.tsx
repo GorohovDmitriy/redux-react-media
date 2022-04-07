@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { signInWithPopup } from "firebase/auth";
+import { useDispatch } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db, provider } from "../../firebase";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
 import { signInWithGoogle } from "../../redux/actions/authActions";
 import { setUserStore } from "../../redux/actions/usersAction";
 import { User } from "../../redux/reducers/typesAuth";

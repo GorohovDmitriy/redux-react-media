@@ -18,11 +18,7 @@ const Left: FC = React.memo(() => {
   return (
     <div className="left">
       <div className="left__content">
-        <img
-          src={`${user?.image}`}
-          alt={`${user?.displayName}`}
-          className="left__image"
-        />
+        <img src={`${user?.image}`} alt="User" className="left__image" />
         <p className="left__username">{user?.displayName}</p>
         <Link to="/account">
           <p className="left__email">View Profile</p>

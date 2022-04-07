@@ -113,8 +113,8 @@ export const addLike = (
 ): ThunkAction<void, RootState, null, PostsActions> => {
   return async (dispatch) => {
     const postDoc = doc(db, "posts", post.id);
-    const newField = { like: post.like + 1 };
-    await updateDoc(postDoc, newField);
+    const newPost = { like: post.like + 1 };
+    await updateDoc(postDoc, newPost);
 
     const postsCollection = collection(db, "posts");
     const data = await getDocs(postsCollection);

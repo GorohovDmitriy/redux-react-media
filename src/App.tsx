@@ -3,7 +3,6 @@ import Layout from "./Components/Layout";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import AboutPage from "./pages/AboutPage";
 import AccountPage from "./pages/AccountPage";
 import ChatsPage from "./pages/ChatsPage";
 
@@ -42,16 +41,6 @@ const App = () => {
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-        <Route path="/profile" element={<AboutLayout />}>
-          <Route
-            index
-            element={
-              <PrivateRoute>
-                <AboutPage />
-              </PrivateRoute>
-            }
-          />
         </Route>
         <Route path="/account" element={<AboutLayout />}>
           <Route

@@ -8,15 +8,17 @@ import { addComments } from "../../redux/actions/postsActions";
 
 import CommentList from "../../Components/CommentList";
 import CommentForm from "../../Components/CommentForm";
+import ImageView from "../../UI/ImageView";
+import VideoView from "../../UI/VideoView";
+import EmbedView from "../../UI/EmbedView";
 
 import "./index.scss";
 
 const SinglPostPage: FC = React.memo(() => {
   const dispatch = useDispatch();
-  const [message, setMessage] = useState("");
   const { id } = useParams();
+  const [message, setMessage] = useState("");
   const { posts } = useSelector((state: RootState) => state.posts);
-
   const currentPost = posts.find((post: Posts) => post.id === id);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,32 +33,35 @@ const SinglPostPage: FC = React.memo(() => {
 
   return (
     <div className="single">
-      <div>
-        <img src={`${currentPost?.author.image}`} alt="AAA" />
+      <div className="single__user">
+        <img src={`${currentPost?.author.image}`} alt="User" />
         <p>{currentPost?.author.displayName}</p>
       </div>
       <p>{currentPost?.title}</p>
       {currentPost?.url && (
-        <img
-          src={currentPost?.url}
+        <ImageView
           className="single__img"
-          alt="aa"
+          url={currentPost.url}
           width="100%"
           height="90%"
         />
       )}
       {currentPost?.video && (
-        <div>
-          <video src={currentPost?.video} width="100%" height="80%" controls />
+        <div className="single__video">
+          <VideoView
+            video={currentPost.video}
+            width="100%"
+            height="80%"
+            controls
+          />
         </div>
       )}
       {currentPost?.document && (
-        <div>
-          <embed src={currentPost.document} width="100%" height={500} />
-        </div>
+        <EmbedView embed={currentPost.document} width="100%" height={500} />
       )}
       <hr />
       <CommentForm
+        post={currentPost?.author}
         addCommentInPost={addCommentInPost}
         message={message}
         handleChange={handleChange}
