@@ -9,6 +9,7 @@ import ChatsPage from "./pages/ChatsPage";
 
 import PrivateRoute from "./HOC/PrivateRoute";
 import AboutLayout from "./Components/AboutLayout";
+import SinglPostPage from "./pages/SinglPostPage";
 
 const App = () => {
   return (
@@ -32,6 +33,14 @@ const App = () => {
             }
           />
           <Route path="login" element={<LoginPage />} />
+          <Route
+            path="post/:id/edit"
+            element={
+              <PrivateRoute>
+                <SinglPostPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
         <Route path="/profile" element={<AboutLayout />}>

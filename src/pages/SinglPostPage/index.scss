@@ -1,0 +1,12 @@
+.single {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem;
+
+  &__img {
+    height: 80%;
+    margin-bottom: 1rem;
+  }
+}

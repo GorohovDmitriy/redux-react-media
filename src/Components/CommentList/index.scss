@@ -1,0 +1,52 @@
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin-top: 1rem;
+  background: aliceblue;
+  border-radius: 20px;
+
+  &__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+  }
+
+  &__img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(52, 86, 255, 0.75);
+  }
+
+  &__message {
+    b {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 110%;
+      color: #070928;
+    }
+
+    p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 110%;
+      color: rgba(7, 9, 40, 0.75);
+    }
+  }
+
+  &__delete {
+    margin-right: 20px;
+    cursor: pointer;
+
+    svg {
+      path {
+        fill: #df0000;
+      }
+    }
+  }
+}

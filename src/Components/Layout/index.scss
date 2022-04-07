@@ -16,7 +16,7 @@
       300px
     );
 
-  @media (max-width: 1124px) {
+  @media (max-width: 1024px) {
     grid-template-columns: minmax(150px, 250px) minmax(500px, 1fr);
   }
 

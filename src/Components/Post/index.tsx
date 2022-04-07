@@ -1,8 +1,18 @@
-import { FC, useState } from "react";
-import Svg from "../../assets/svg";
-import Input from "../../UI/Input";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FcLikePlaceholder,
+  FcLike,
+  FcSettings,
+  FcComments,
+} from "react-icons/fc";
 
-import { Posts } from "../../redux/reducers/typesPosts";
+import CommentForm from "../CommentForm";
+import CommentList from "../CommentList";
+
+import { Posts, Comment } from "../../redux/reducers/typesPosts";
+import { useDispatch } from "react-redux";
+import { addComments, addLike } from "../../redux/actions/postsActions";
 
 import "./index.scss";
 
@@ -11,15 +21,30 @@ interface PostProps {
 }
 
 const Post: FC<PostProps> = ({ post }) => {
-  const [popup, setPopup] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const showPopup = () => {
-    setPopup(!popup);
+  const toggleToPost = () => {
+    navigate(`/post/${post.id}/edit`);
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
+  };
+
+  const toggleLike = () => {
+    dispatch(addLike(post));
+  };
+
+  const addCommentInPost = (event: FormEvent) => {
+    event.preventDefault();
+    dispatch(addComments(message, post.id, post.comments));
+    setMessage("");
   };
 
   return (
     <div className="post__box">
-      {popup && <div className="post__box__menu">Menu</div>}
       <div className="post__box__user">
         <div className="post__box__avatar">
           <img
@@ -29,8 +54,8 @@ const Post: FC<PostProps> = ({ post }) => {
           />
           <p>{post.author.displayName}</p>
         </div>
-        <div className="post__box__edit" onClick={showPopup}>
-          <Svg id="edit" />
+        <div className="post__box__edit" onClick={toggleToPost}>
+          <FcSettings size={25} />
         </div>
       </div>
       <p className="post__box__title">{post.title}</p>
@@ -39,13 +64,7 @@ const Post: FC<PostProps> = ({ post }) => {
       )}
       {post.video && (
         <div className="post__box__video">
-          <video
-            src={post.video}
-            width="100%"
-            height="80%"
-            style={{ borderRadius: "20px" }}
-            controls
-          />
+          <video src={post.video} width="100%" height="80%" controls />
         </div>
       )}
       {post.document && (
@@ -55,11 +74,16 @@ const Post: FC<PostProps> = ({ post }) => {
       )}
       <div className="post__icons">
         <div className="post__icons__item">
-          <Svg id="like" /> <p>Like</p>
+          {post.like === 0 ? (
+            <FcLikePlaceholder size={20} />
+          ) : (
+            <FcLike size={20} />
+          )}
+          <p onClick={toggleLike}>{post.like} Like </p>
         </div>
         <div className="post__icons__item">
-          <Svg id="comments" />
-          <p>Comments</p>
+          <FcComments size={20} />
+          <p>Comments {post.comments?.length}</p>
         </div>
       </div>
       <div className="post__comment">
@@ -68,13 +92,16 @@ const Post: FC<PostProps> = ({ post }) => {
           alt="Avatar"
           className="post__box__img"
         />
-        <div className="post__comment__input">
-          <div className="post__comment__input__icons">
-            <Svg id="send" />
-          </div>
-          <Input className="input" type="text" placeholder="add Comment..." />
-        </div>
+        <CommentForm
+          message={message}
+          handleChange={handleChange}
+          addCommentInPost={addCommentInPost}
+        />
       </div>
+      {post.comments &&
+        post.comments.map((comment: Comment, index: number) => (
+          <CommentList key={`${comment.message}__${index}`} comment={comment} />
+        ))}
     </div>
   );
 };

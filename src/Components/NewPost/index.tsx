@@ -1,58 +1,36 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  FcPicture,
+  FcVideoCall,
+  FcCheckmark,
+  FcAddressBook,
+} from "react-icons/fc";
 
 import Field from "../../UI/Field";
 import Input from "../../UI/Input";
-import Svg from "../../assets/svg";
 
-import { db, auth, storage } from "../../firebase";
-import { setAddPost } from "../../redux/actions/postsActions";
+import { storage } from "../../firebase";
+import { addPost } from "../../redux/actions/postsActions";
 import { RootState } from "../../redux/store";
 
 import "./index.scss";
 
 const NewPost: FC = React.memo(() => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
+
   const [emptyField, setEmptyField] = useState(false);
   const [url, setUrl] = useState<any>(null);
   const [video, setVideo] = useState<any>(null);
   const [document, setDocument] = useState<any>(null);
-  const { user } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState("");
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
     if (value.trim() !== "") {
-      const postCollection = collection(db, "posts");
-
-      await addDoc(postCollection, {
-        title: value,
-        author: {
-          uid: auth.currentUser?.uid,
-          displayName: auth.currentUser?.displayName,
-          image: auth.currentUser?.photoURL,
-        },
-        url: url,
-        video: video,
-        document: document,
-      });
-
-      dispatch(
-        setAddPost({
-          id: String(Date.now()),
-          title: value,
-          url: url,
-          video: video,
-          document: document,
-          author: {
-            uid: auth.currentUser?.uid,
-            displayName: auth.currentUser?.displayName,
-            image: auth.currentUser?.photoURL,
-          },
-        })
-      );
+      dispatch(addPost(value, url, video, document));
       setValue("");
       setUrl(null);
       setVideo(null);
@@ -137,21 +115,21 @@ const NewPost: FC = React.memo(() => {
       {document && <embed src={document} className="post__image" />}
       <div className="post__group">
         <Field
-          svg={<Svg id="video" />}
+          svg={<FcVideoCall size={20} />}
           className="post__file"
           type="file"
           accept="video/*"
           onChange={handleChangeVideo}
         />
         <Field
-          svg={<Svg id="photo" />}
+          svg={<FcPicture size={25} />}
           className="post__file"
           type="file"
           accept=".jpg, .jpeg, .png"
           onChange={handleChangePicture}
         />
         <Field
-          svg={<Svg id="work" />}
+          svg={<FcAddressBook size={25} />}
           className="post__file"
           type="file"
           accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -159,7 +137,7 @@ const NewPost: FC = React.memo(() => {
         />
         <div className="post__file__send">
           <p onClick={submitHandler}>
-            <Svg id="send" />
+            <FcCheckmark size={25} />
           </p>
         </div>
       </div>

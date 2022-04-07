@@ -4,9 +4,14 @@ export enum EnumPosts {
 }
 
 export interface Author {
-  uid?: string | null;
-  displayName?: string | null;
-  image?: string | null;
+  uid?: string | undefined;
+  displayName?: string | null | undefined;
+  image?: string | null | undefined;
+}
+
+export interface Comment {
+  message: string;
+  author?: Author;
 }
 
 export interface Posts {
@@ -16,6 +21,8 @@ export interface Posts {
   document?: string;
   video?: string;
   author: Author;
+  like: number;
+  comments?: Comment[];
 }
 
 export interface PostsState {

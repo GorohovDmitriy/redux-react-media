@@ -6,7 +6,7 @@
 
   &__menu {
     position: absolute;
-    width: 200px;
+    width: 120px;
     height: 60px;
     background-color: white;
     top: 20px;
@@ -64,7 +64,9 @@
   }
 
   &__video {
-    border-radius: 30px;
+    video {
+      border-radius: 30px;
+    }
   }
 
   &__document {
@@ -88,14 +90,6 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
-
-    &:hover {
-      svg {
-        path {
-          fill: #1e2370;
-        }
-      }
-    }
 
     p {
       font-style: normal;
