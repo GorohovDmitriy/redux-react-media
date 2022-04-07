@@ -7,6 +7,11 @@
   background: aliceblue;
   border-radius: 20px;
 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+
   &__block {
     display: flex;
     align-items: center;
@@ -22,18 +27,23 @@
   }
 
   &__message {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
     b {
       font-style: normal;
       font-weight: 300;
-      font-size: 12px;
+      font-size: 10px;
       line-height: 110%;
       color: #070928;
     }
 
     p {
+      word-wrap: break-word;
       font-style: normal;
       font-weight: 400;
-      font-size: 10px;
+      font-size: 14px;
       line-height: 110%;
       color: rgba(7, 9, 40, 0.75);
     }
