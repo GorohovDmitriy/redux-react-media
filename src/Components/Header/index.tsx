@@ -30,7 +30,7 @@ const Header: FC = React.memo(() => {
         <div className="header__link">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/chats">Chats</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to="/account">Profile</NavLink>
         </div>
       )}
       {isAuth ? (

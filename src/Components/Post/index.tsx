@@ -10,7 +10,11 @@ import EmbedView from "../../UI/EmbedView";
 
 import { Posts, Comment } from "../../redux/reducers/typesPosts";
 import { useDispatch } from "react-redux";
-import { addComments, addLike } from "../../redux/actions/postsActions";
+import {
+  addComments,
+  addLike,
+  deleteComment,
+} from "../../redux/actions/postsActions";
 
 import "./index.scss";
 
@@ -32,8 +36,14 @@ const Post: FC<PostProps> = ({ post }) => {
 
   const addCommentInPost = (event: FormEvent) => {
     event.preventDefault();
-    dispatch(addComments(message, post.id, post.comments));
-    setMessage("");
+    if (message.trim() !== "") {
+      dispatch(addComments(message, post.id, post.comments));
+      setMessage("");
+    }
+  };
+
+  const removeComment = (id: string) => {
+    dispatch(deleteComment(id, post.comments, post.id));
   };
 
   return (
@@ -78,7 +88,11 @@ const Post: FC<PostProps> = ({ post }) => {
       />
       {post.comments &&
         post.comments.map((comment: Comment, index: number) => (
-          <CommentList key={`${comment.message}__${index}`} comment={comment} />
+          <CommentList
+            key={`${comment.message}__${index}`}
+            comment={comment}
+            removeComment={removeComment}
+          />
         ))}
     </div>
   );

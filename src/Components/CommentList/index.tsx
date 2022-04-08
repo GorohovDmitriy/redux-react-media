@@ -7,29 +7,25 @@ import "./index.scss";
 
 interface CommentListProps {
   comment: Comment;
+  key: string;
+  removeComment: (id: string) => void;
 }
 
-const CommentList: FC<CommentListProps> = ({ comment }) => {
-  return (
-    <div className="list">
-      <div className="list__block">
-        <img
-          className="list__img"
-          src={`${comment.author?.image}`}
-          alt="User"
-        />
-        <div className="list__message">
-          <b>{comment.author?.displayName}</b>
-          <p>{comment.message}</p>
-        </div>
+const CommentList: FC<CommentListProps> = ({ comment, removeComment }) => (
+  <div className="list">
+    <div className="list__block">
+      <img className="list__img" src={`${comment.author?.image}`} alt="User" />
+      <div className="list__message">
+        <b>{comment.author?.displayName}</b>
+        <p>{comment.message}</p>
       </div>
-      {auth.currentUser?.uid === comment.author?.uid && (
-        <div className="list__delete">
-          <CgClose size={15} />
-        </div>
-      )}
     </div>
-  );
-};
+    {auth.currentUser?.uid === comment.author?.uid && (
+      <div className="list__delete" onClick={() => removeComment(comment.id)}>
+        <CgClose size={15} />
+      </div>
+    )}
+  </div>
+);
 
 export default CommentList;

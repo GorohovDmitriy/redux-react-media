@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../redux/store";
 import { Comment, Posts } from "../../redux/reducers/typesPosts";
-import { addComments } from "../../redux/actions/postsActions";
+import { addComments, deleteComment } from "../../redux/actions/postsActions";
 
 import CommentList from "../../Components/CommentList";
 import CommentForm from "../../Components/CommentForm";
@@ -29,6 +29,10 @@ const SinglPostPage: FC = React.memo(() => {
     event.preventDefault();
     dispatch(addComments(message, currentPost?.id, currentPost?.comments));
     setMessage("");
+  };
+
+  const removeComment = (commentId: string) => {
+    dispatch(deleteComment(commentId, currentPost?.comments, id));
   };
 
   return (
@@ -67,7 +71,11 @@ const SinglPostPage: FC = React.memo(() => {
         handleChange={handleChange}
       />
       {currentPost?.comments?.map((comment: Comment, index: number) => (
-        <CommentList key={`${comment.message}__${index}`} comment={comment} />
+        <CommentList
+          key={`${comment.message}__${index}`}
+          comment={comment}
+          removeComment={removeComment}
+        />
       ))}
     </div>
   );

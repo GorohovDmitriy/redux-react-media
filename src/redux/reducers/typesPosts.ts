@@ -10,6 +10,7 @@ export interface Author {
 }
 
 export interface Comment {
+  id: string;
   message: string;
   author?: Author;
 }

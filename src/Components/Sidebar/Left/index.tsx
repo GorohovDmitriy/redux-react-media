@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Posts } from "../../../redux/reducers/typesPosts";
 import { RootState } from "../../../redux/store";
-import userAvatar from "../../../assets/images/userAvatar.png";
 
 import "./index.scss";
 
