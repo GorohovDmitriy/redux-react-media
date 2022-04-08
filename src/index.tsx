@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -12,17 +12,15 @@ import reportWebVitals from "./reportWebVitals";
 import "./styles/index.scss";
 import "./firebase";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+const root = createRoot(document.getElementById("root"));
 
 serviceWorkerRegistration.unregister();
-
 reportWebVitals();
+
+root.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
+);

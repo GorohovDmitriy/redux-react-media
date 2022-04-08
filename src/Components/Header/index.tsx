@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import { FcCdLogo } from "react-icons/fc";
 
 import Button from "../../UI/Button";
 
@@ -25,7 +26,9 @@ const Header: FC = React.memo(() => {
 
   return (
     <header className="header">
-      <div>Logo</div>
+      <div>
+        <FcCdLogo size={80} />
+      </div>
       {isAuth && (
         <div className="header__link">
           <NavLink to="/">Home</NavLink>

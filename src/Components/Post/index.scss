@@ -37,6 +37,17 @@
     }
   }
 
+  &__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__delete {
+    cursor: pointer;
+  }
+
   &__edit {
     cursor: pointer;
   }

@@ -5,6 +5,7 @@ import { Posts } from "../reducers/typesPosts";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   updateDoc,
@@ -23,6 +24,21 @@ export const setAllPost = (): ThunkAction<
       const data = await getDocs(postsCollection);
       const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       dispatch(getAddPosts(posts));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const setRemovePost = (
+  id: string
+): ThunkAction<void, RootState, null, PostsActions> => {
+  return async (dispatch) => {
+    try {
+      const deletPost = doc(db, "posts", id);
+      await deleteDoc(deletPost);
+
+      dispatch(setAllPost());
     } catch (error) {
       console.log(error);
     }
