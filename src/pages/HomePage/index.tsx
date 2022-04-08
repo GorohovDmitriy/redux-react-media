@@ -29,4 +29,6 @@ const HomePage: FC = React.memo(() => {
   );
 });
 
+HomePage.displayName = "HomePage";
+
 export default HomePage;

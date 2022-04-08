@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, FormEvent } from "react";
 import { FcCheckmark } from "react-icons/fc";
+import { auth } from "../../firebase";
 
 import Input from "../../UI/Input";
 
@@ -18,7 +19,11 @@ const CommentForm: FC<CommentFormProps> = ({
 }) => {
   return (
     <div className="post__comment">
-      <img src={`${post.image}`} alt="Avatar" className="post__box__img" />
+      <img
+        src={`${auth.currentUser?.photoURL}`}
+        alt="Avatar"
+        className="post__box__img"
+      />
       <form className="post__comment__input" onSubmit={addCommentInPost}>
         <div className="post__comment__input__icons" onClick={addCommentInPost}>
           <FcCheckmark size={25} />

@@ -14,4 +14,6 @@ const PrivateRoute: FC = React.memo(({ children }) => {
   return <>{children}</>;
 });
 
+PrivateRoute.displayName = "PrivateRoute";
+
 export default PrivateRoute;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,7 +19,10 @@ const SinglPostPage: FC = React.memo(() => {
   const { id } = useParams();
   const [message, setMessage] = useState("");
   const { posts } = useSelector((state: RootState) => state.posts);
-  const currentPost = posts.find((post: Posts) => post.id === id);
+
+  const currentPost = useMemo(() => {
+    return posts.find((post: Posts) => post.id === id);
+  }, [id, posts]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -80,5 +83,7 @@ const SinglPostPage: FC = React.memo(() => {
     </div>
   );
 });
+
+SinglPostPage.displayName = "SinglPostPage";
 
 export default SinglPostPage;

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
@@ -11,9 +11,9 @@ const Left: FC = React.memo(() => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { posts } = useSelector((state: RootState) => state.posts);
 
-  const postsCount = posts.filter(
-    (post: Posts) => post.author.uid === user?.uid
-  );
+  const postsCount = useMemo(() => {
+    return posts.filter((post: Posts) => post.author.uid === user?.uid);
+  }, [posts, user?.uid]);
 
   return (
     <div className="left">
@@ -31,5 +31,7 @@ const Left: FC = React.memo(() => {
     </div>
   );
 });
+
+Left.displayName = "Left";
 
 export default Left;

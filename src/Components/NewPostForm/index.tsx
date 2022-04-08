@@ -29,4 +29,6 @@ const NewPostForm: FC<NewPostFormProps> = React.memo(
   }
 );
 
+NewPostForm.displayName = "NewPostForm";
+
 export default NewPostForm;

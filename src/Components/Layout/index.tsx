@@ -14,6 +14,7 @@ import "./index.scss";
 
 const Layout: FC = React.memo(() => {
   const { isAuth } = useSelector((state: RootState) => state.auth);
+
   return (
     <div className="container">
       <Header />
@@ -29,5 +30,7 @@ const Layout: FC = React.memo(() => {
     </div>
   );
 });
+
+Layout.displayName = "Layout";
 
 export default Layout;
