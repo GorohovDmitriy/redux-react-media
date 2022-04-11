@@ -1,5 +1,4 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { FcLikePlaceholder, FcLike, FcComments } from "react-icons/fc";
 
 import PostHeader from "../PostHeader";
 import CommentForm from "../CommentForm";
@@ -7,6 +6,7 @@ import CommentList from "../CommentList";
 import ImageView from "../../UI/ImageView";
 import VideoView from "../../UI/VideoView";
 import EmbedView from "../../UI/EmbedView";
+import PostIcons from "../PostIcons";
 
 import { Posts, Comment } from "../../redux/reducers/typesPosts";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,9 +62,7 @@ const Post: FC<PostProps> = React.memo(({ post }) => {
     <div className="post__box">
       <PostHeader post={post} />
       <p className="post__box__title">{post.title}</p>
-      {post.url && (
-        <ImageView url={post.author.image} className="post__box__image" />
-      )}
+      {post.url && <ImageView url={post.url} className="post__box__image" />}
       {post.video && (
         <div className="post__box__video">
           <VideoView
@@ -80,20 +78,7 @@ const Post: FC<PostProps> = React.memo(({ post }) => {
           <EmbedView embed={post.document} width="100%" height={500} />
         </div>
       )}
-      <div className="post__icons">
-        <div className="post__icons__item">
-          {post.like === 0 ? (
-            <FcLikePlaceholder size={20} />
-          ) : (
-            <FcLike size={20} />
-          )}
-          <p onClick={toggleLike}>{post.like} Like </p>
-        </div>
-        <div className="post__icons__item">
-          <FcComments size={20} />
-          <p>Comments {post.comments?.length}</p>
-        </div>
-      </div>
+      <PostIcons post={post} toggleLike={toggleLike} />
       <CommentForm
         post={post.author}
         message={message}

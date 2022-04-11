@@ -180,7 +180,7 @@ export const addComments = (
 };
 
 export const addLike = (
-  post: Posts
+  post: any
 ): ThunkAction<void, RootState, null, PostsActions> => {
   return async (dispatch) => {
     try {

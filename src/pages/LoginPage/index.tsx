@@ -18,6 +18,7 @@ const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   const signIn = async () => {
     await signInWithPopup(auth, provider).then(({ user }) => {
       if (user) {

@@ -13,6 +13,7 @@ import { RootState } from "../../redux/store";
 import { Comment, Posts } from "../../redux/reducers/typesPosts";
 import {
   addComments,
+  addLike,
   deleteComment,
   setErrorPost,
 } from "../../redux/actions/postsActions";
@@ -22,6 +23,7 @@ import CommentForm from "../../Components/CommentForm";
 import ImageView from "../../UI/ImageView";
 import VideoView from "../../UI/VideoView";
 import EmbedView from "../../UI/EmbedView";
+import PostIcons from "../../Components/PostIcons";
 
 import "./index.scss";
 
@@ -47,6 +49,10 @@ const SinglPostPage: FC = React.memo(() => {
 
   const removeComment = (commentId: string) => {
     dispatch(deleteComment(commentId, currentPost?.comments, id));
+  };
+
+  const toggleLike = () => {
+    dispatch(addLike(currentPost));
   };
 
   useEffect(() => {
@@ -86,6 +92,7 @@ const SinglPostPage: FC = React.memo(() => {
         <EmbedView embed={currentPost.document} width="100%" height={500} />
       )}
       <hr />
+      <PostIcons post={currentPost} toggleLike={toggleLike} />
       <CommentForm
         post={currentPost?.author}
         addCommentInPost={addCommentInPost}

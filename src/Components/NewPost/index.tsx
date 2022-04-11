@@ -25,7 +25,7 @@ const NewPost: FC = React.memo(() => {
   const dispatch = useDispatch();
   const { error } = useSelector((state: RootState) => state.posts);
 
-  const [loaded, setloaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [emptyField, setEmptyField] = useState(false);
   const [url, setUrl] = useState<any>(null);
   const [video, setVideo] = useState<any>(null);
@@ -53,11 +53,11 @@ const NewPost: FC = React.memo(() => {
   const handleChangeDocument = async (event: any) => {
     if (event.target.files[0]) {
       const videoRef = ref(storage, event.target.files[0].name);
-      setloaded(true);
+      setLoaded(true);
       await uploadBytes(videoRef, event.target.files[0]).then(() => {
         getDownloadURL(videoRef).then((url) => {
           setDocument(url);
-          setloaded(false);
+          setLoaded(false);
         });
       });
     }
@@ -66,11 +66,11 @@ const NewPost: FC = React.memo(() => {
   const handleChangeVideo = async (event: any) => {
     if (event.target.files[0]) {
       const videoRef = ref(storage, event.target.files[0].name);
-      setloaded(true);
+      setLoaded(true);
       await uploadBytes(videoRef, event.target.files[0]).then(() => {
         getDownloadURL(videoRef).then((url) => {
           setVideo(url);
-          setloaded(false);
+          setLoaded(false);
         });
       });
     }
@@ -79,11 +79,11 @@ const NewPost: FC = React.memo(() => {
   const handleChangePicture = async (event: any) => {
     if (event.target.files[0]) {
       const imageRef = ref(storage, event.target.files[0].name);
-      setloaded(true);
+      setLoaded(true);
       await uploadBytes(imageRef, event.target.files[0]).then(() => {
         getDownloadURL(imageRef).then((url) => {
           setUrl(url);
-          setloaded(false);
+          setLoaded(false);
         });
       });
     }
