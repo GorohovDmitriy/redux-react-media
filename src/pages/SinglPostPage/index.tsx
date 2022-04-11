@@ -1,10 +1,21 @@
-import React, { ChangeEvent, FC, FormEvent, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../redux/store";
 import { Comment, Posts } from "../../redux/reducers/typesPosts";
-import { addComments, deleteComment } from "../../redux/actions/postsActions";
+import {
+  addComments,
+  deleteComment,
+  setErrorPost,
+} from "../../redux/actions/postsActions";
 
 import CommentList from "../../Components/CommentList";
 import CommentForm from "../../Components/CommentForm";
@@ -18,7 +29,7 @@ const SinglPostPage: FC = React.memo(() => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [message, setMessage] = useState("");
-  const { posts } = useSelector((state: RootState) => state.posts);
+  const { posts, error } = useSelector((state: RootState) => state.posts);
 
   const currentPost = useMemo(() => {
     return posts.find((post: Posts) => post.id === id);
@@ -38,10 +49,18 @@ const SinglPostPage: FC = React.memo(() => {
     dispatch(deleteComment(commentId, currentPost?.comments, id));
   };
 
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setErrorPost(""));
+      }
+    };
+  }, [dispatch, error]);
+
   return (
     <div className="single">
       <div className="single__user">
-        <img src={`${currentPost?.author.image}`} alt="User" />
+        <ImageView url={`${currentPost?.author.image}`} />
         <p>{currentPost?.author.displayName}</p>
       </div>
       <p>{currentPost?.title}</p>

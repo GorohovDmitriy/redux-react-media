@@ -1,16 +1,20 @@
-import { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { FcSettings, FcCancel } from "react-icons/fc";
 import { Posts } from "../../redux/reducers/typesPosts";
 import { auth } from "../../firebase";
-import { useDispatch } from "react-redux";
-import { setRemovePost } from "../../redux/actions/postsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { setErrorPost, setRemovePost } from "../../redux/actions/postsActions";
+import { RootState } from "../../redux/store";
+
+import ImageView from "../../UI/ImageView";
 
 interface PostHeaderProps {
   post: Posts;
 }
 
-const PostHeader: FC<PostHeaderProps> = ({ post }) => {
+const PostHeader: FC<PostHeaderProps> = React.memo(({ post }) => {
+  const { error } = useSelector((state: RootState) => state.posts);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,14 +26,18 @@ const PostHeader: FC<PostHeaderProps> = ({ post }) => {
     dispatch(setRemovePost(post.id));
   };
 
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setErrorPost(""));
+      }
+    };
+  }, [dispatch, error]);
+
   return (
     <div className="post__box__user">
       <div className="post__box__avatar">
-        <img
-          src={`${post.author.image}`}
-          alt="User"
-          className="post__box__img"
-        />
+        <ImageView url={`${post.author.image}`} className="post__box__img" />
         <p>{post.author.displayName}</p>
       </div>
       <div className="post__box__block">
@@ -44,6 +52,8 @@ const PostHeader: FC<PostHeaderProps> = ({ post }) => {
       </div>
     </div>
   );
-};
+});
+
+PostHeader.displayName = "PostHeader";
 
 export default PostHeader;

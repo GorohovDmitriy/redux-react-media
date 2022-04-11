@@ -2,6 +2,7 @@ import { ChangeEvent, FC, FormEvent } from "react";
 import { FcCheckmark } from "react-icons/fc";
 import { auth } from "../../firebase";
 
+import ImageView from "../../UI/ImageView";
 import Input from "../../UI/Input";
 
 interface CommentFormProps {
@@ -19,9 +20,8 @@ const CommentForm: FC<CommentFormProps> = ({
 }) => {
   return (
     <div className="post__comment">
-      <img
-        src={`${auth.currentUser?.photoURL}`}
-        alt="Avatar"
+      <ImageView
+        url={`${auth.currentUser?.photoURL}`}
         className="post__box__img"
       />
       <form className="post__comment__input" onSubmit={addCommentInPost}>

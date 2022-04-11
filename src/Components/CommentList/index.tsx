@@ -3,6 +3,8 @@ import { auth } from "../../firebase";
 import { CgClose } from "react-icons/cg";
 import { Comment } from "../../redux/reducers/typesPosts";
 
+import ImageView from "../../UI/ImageView";
+
 import "./index.scss";
 
 interface CommentListProps {
@@ -14,7 +16,7 @@ interface CommentListProps {
 const CommentList: FC<CommentListProps> = ({ comment, removeComment }) => (
   <div className="list">
     <div className="list__block">
-      <img className="list__img" src={`${comment.author?.image}`} alt="User" />
+      <ImageView url={`${comment.author?.image}`} className="list__img" />
       <div className="list__message">
         <b>{comment.author?.displayName}</b>
         <p>{comment.message}</p>

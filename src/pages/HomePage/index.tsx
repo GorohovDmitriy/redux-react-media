@@ -5,17 +5,23 @@ import Post from "../../Components/Post";
 import { Posts } from "../../redux/reducers/typesPosts";
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllPost } from "../../redux/actions/postsActions";
+import { setAllPost, setErrorPost } from "../../redux/actions/postsActions";
 
 import "./index.scss";
 
 const HomePage: FC = React.memo(() => {
   const dispatch = useDispatch();
-  const { posts } = useSelector((state: RootState) => state.posts);
+  const { posts, error } = useSelector((state: RootState) => state.posts);
 
   useEffect(() => {
     dispatch(setAllPost());
-  }, [dispatch]);
+
+    return () => {
+      if (error) {
+        dispatch(setErrorPost(""));
+      }
+    };
+  }, [dispatch, error]);
 
   return (
     <div className="home">

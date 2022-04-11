@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, FormEvent } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
+import ImageView from "../../UI/ImageView";
 import Input from "../../UI/Input";
 
 interface NewPostFormProps {
@@ -16,7 +17,7 @@ const NewPostForm: FC<NewPostFormProps> = React.memo(
     const { user } = useSelector((state: RootState) => state.auth);
     return (
       <form className="post__form" onSubmit={submitHandler}>
-        <img src={`${user?.image}`} alt="User" />
+        <ImageView url={`${user?.image}`} />
         <Input
           value={value}
           onChange={changeHandler}

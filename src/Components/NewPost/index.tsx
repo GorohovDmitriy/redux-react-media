@@ -1,5 +1,5 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   FcPicture,
@@ -16,12 +16,14 @@ import EmbedView from "../../UI/EmbedView";
 import Spiner from "../Spiner";
 
 import { storage } from "../../firebase";
-import { addPost } from "../../redux/actions/postsActions";
+import { RootState } from "../../redux/store";
+import { addPost, setErrorPost } from "../../redux/actions/postsActions";
 
 import "./index.scss";
 
-const NewPost: FC = () => {
+const NewPost: FC = React.memo(() => {
   const dispatch = useDispatch();
+  const { error } = useSelector((state: RootState) => state.posts);
 
   const [loaded, setloaded] = useState(false);
   const [emptyField, setEmptyField] = useState(false);
@@ -38,6 +40,7 @@ const NewPost: FC = () => {
       setUrl(null);
       setVideo(null);
       setDocument(null);
+      setEmptyField(false);
     } else {
       setEmptyField(true);
     }
@@ -45,9 +48,6 @@ const NewPost: FC = () => {
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    if (value.trim() !== "") {
-      setEmptyField(false);
-    }
   };
 
   const handleChangeDocument = async (event: any) => {
@@ -88,6 +88,14 @@ const NewPost: FC = () => {
       });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setErrorPost(""));
+      }
+    };
+  }, [dispatch, error]);
 
   return (
     <div className="post">
@@ -131,6 +139,8 @@ const NewPost: FC = () => {
       </div>
     </div>
   );
-};
+});
+
+NewPost.displayName = "NewPost";
 
 export default NewPost;

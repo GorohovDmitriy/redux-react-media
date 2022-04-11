@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { FcLikePlaceholder, FcLike, FcComments } from "react-icons/fc";
 
 import PostHeader from "../PostHeader";
@@ -9,12 +9,14 @@ import VideoView from "../../UI/VideoView";
 import EmbedView from "../../UI/EmbedView";
 
 import { Posts, Comment } from "../../redux/reducers/typesPosts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addComments,
   addLike,
   deleteComment,
+  setErrorPost,
 } from "../../redux/actions/postsActions";
+import { RootState } from "../../redux/store";
 
 import "./index.scss";
 
@@ -22,8 +24,10 @@ interface PostProps {
   post: Posts;
 }
 
-const Post: FC<PostProps> = ({ post }) => {
+const Post: FC<PostProps> = React.memo(({ post }) => {
   const [message, setMessage] = useState("");
+  const { error } = useSelector((state: RootState) => state.posts);
+
   const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +50,21 @@ const Post: FC<PostProps> = ({ post }) => {
     dispatch(deleteComment(id, post.comments, post.id));
   };
 
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setErrorPost(""));
+      }
+    };
+  }, [dispatch, error]);
+
   return (
     <div className="post__box">
       <PostHeader post={post} />
       <p className="post__box__title">{post.title}</p>
-      {post.url && <ImageView url={post.url} className="post__box__image" />}
+      {post.url && (
+        <ImageView url={post.author.image} className="post__box__image" />
+      )}
       {post.video && (
         <div className="post__box__video">
           <VideoView
@@ -96,6 +110,8 @@ const Post: FC<PostProps> = ({ post }) => {
         ))}
     </div>
   );
-};
+});
+
+Post.displayName = "Post";
 
 export default Post;

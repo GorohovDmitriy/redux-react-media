@@ -1,6 +1,7 @@
 export enum EnumPosts {
   ADD_POST = "ADD_POST",
   GET_POSTS = "GET_POSTS",
+  SET_ERROR = "SET_ERROR",
 }
 
 export interface Author {
@@ -28,6 +29,7 @@ export interface Posts {
 
 export interface PostsState {
   posts: Posts[] | [];
+  error: string;
 }
 
 interface SetAddPostAction {
@@ -40,4 +42,9 @@ interface GetPostsAction {
   payload: Posts[];
 }
 
-export type PostsActions = SetAddPostAction | GetPostsAction;
+interface setErrorAction {
+  type: typeof EnumPosts.SET_ERROR;
+  payload: string;
+}
+
+export type PostsActions = SetAddPostAction | GetPostsAction | setErrorAction;

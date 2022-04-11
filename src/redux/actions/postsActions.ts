@@ -12,6 +12,17 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+export const setErrorPost = (
+  payload: string
+): ThunkAction<void, RootState, null, PostsActions> => {
+  return (dispatch) => {
+    dispatch({
+      type: EnumPosts.SET_ERROR,
+      payload,
+    });
+  };
+};
+
 export const setAllPost = (): ThunkAction<
   void,
   RootState,
@@ -25,7 +36,7 @@ export const setAllPost = (): ThunkAction<
       const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       dispatch(getAddPosts(posts));
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error getting posts"));
     }
   };
 };
@@ -40,7 +51,7 @@ export const setRemovePost = (
 
       dispatch(setAllPost());
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error remove post"));
     }
   };
 };
@@ -63,7 +74,7 @@ export const deleteComment = (
       });
       dispatch(setAllPost());
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error remove comment"));
     }
   };
 };
@@ -108,7 +119,7 @@ export const addPost = (
         })
       );
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error added post"));
     }
   };
 };
@@ -162,10 +173,8 @@ export const addComments = (
       await updateDoc(postRef, {
         comments: newComments,
       });
-
-      dispatch(setAllPost());
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error added coments"));
     }
   };
 };
@@ -181,7 +190,7 @@ export const addLike = (
 
       dispatch(setAllPost());
     } catch (error) {
-      console.log(error);
+      dispatch(setErrorPost("Error added like"));
     }
   };
 };

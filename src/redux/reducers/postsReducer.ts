@@ -2,6 +2,7 @@ import { EnumPosts, PostsState, PostsActions } from "./typesPosts";
 
 const initialState: PostsState = {
   posts: [],
+  error: "",
 };
 
 export const postsReducer = (state = initialState, action: PostsActions) => {
@@ -15,6 +16,11 @@ export const postsReducer = (state = initialState, action: PostsActions) => {
       return {
         ...state,
         posts: [...action.payload],
+      };
+    case EnumPosts.SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;
